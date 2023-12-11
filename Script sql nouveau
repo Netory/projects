@@ -1,0 +1,112 @@
+-- Suppression des tables si elles existent déjà
+DROP TABLE IF EXISTS ContratClient, Contrat, Operation, CompteClient, Compte, Client, Motif, Rdv, Employe;
+
+-- Création de la table Client
+CREATE TABLE Client (
+    numClient INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(50),
+    prenom VARCHAR(50),
+    dateNaissance DATE,
+    adresse VARCHAR(100),
+    mail VARCHAR(50),
+    numtel VARCHAR(15),
+    situation VARCHAR(50)
+);
+
+-- Insertion de quelques exemples dans la table
+INSERT INTO Client (nom, prenom, dateNaissance, adresse, mail, numtel, situation) VALUES 
+('Dupont', 'Jean', '2003-11-10', '1 Rue de la Paix', 'jean@example.com', '0123456789', 'Célibataire'),
+('Durand', 'Marie', '2003-04-19', '5 Avenue des Fleurs', 'marie@example.com', '9876543210', 'Marié');
+
+-- Création de la table Compte
+CREATE TABLE Compte (
+    nomCompte VARCHAR(50) PRIMARY KEY
+);
+
+-- Création de la table CompteClient
+CREATE TABLE CompteClient (
+    numClient INT,
+    nomCompte VARCHAR(50),
+    dateOuverture DATE,
+    solde DECIMAL(10, 2),
+    montantDecouvert DECIMAL(10, 2),
+    FOREIGN KEY (numClient) REFERENCES Client(numClient),
+    FOREIGN KEY (nomCompte) REFERENCES Compte(nomCompte)
+);
+
+-- Insertion de quelques exemples dans la table Compte
+INSERT INTO Compte (nomCompte) VALUES ('NomCompte1'), ('NomCompte2');
+INSERT INTO CompteClient (numClient, nomCompte, dateOuverture, solde, montantDecouvert) VALUES 
+(1, 'NomCompte1', '2023-01-15', 1500.00, 100.00),
+(2, 'NomCompte2', '2023-02-20', 3000.00, 0.00);
+
+-- Création de la table Operation
+CREATE TABLE Operation (
+    numOp INT AUTO_INCREMENT PRIMARY KEY,
+    montant DECIMAL(10, 2),
+    typeOp VARCHAR(50)
+);
+
+-- Insertion de quelques exemples dans la table Operation
+INSERT INTO Operation (montant, typeOp) VALUES 
+(100.00, 'Dépôt'),
+(-50.00, 'Retrait');
+
+-- Création de la table Contrat
+CREATE TABLE Contrat (
+    nomContrat VARCHAR(50) PRIMARY KEY
+);
+
+-- Création de la table ContratClient
+CREATE TABLE ContratClient (
+    nomContrat VARCHAR(50),
+    numClient INT,
+    dateOuvertureContrat DATE,
+    tarifMensuel DECIMAL(10, 2),
+    FOREIGN KEY (nomContrat) REFERENCES Contrat(nomContrat),
+    FOREIGN KEY (numClient) REFERENCES Client(numClient)
+);
+
+-- Insertion de quelques exemples dans la table ContratClient
+INSERT INTO Contrat (nomContrat) Values (1),(2);
+INSERT INTO ContratClient (nomContrat, numClient, dateOuvertureContrat, tarifMensuel) VALUES 
+(1, 1, '2023-03-10', 50.00),
+(2, 2, '2023-04-05', 75.00);
+
+-- Création de la table Motif
+CREATE TABLE Motif (
+    idMotif INT AUTO_INCREMENT PRIMARY KEY,
+    libelleMotif VARCHAR(100),
+    listePieces VARCHAR(200)
+);
+
+-- Insertion de quelques exemples dans la table Motif
+INSERT INTO Motif (libelleMotif, listePieces) VALUES 
+('Raisons médicales', 'Certificat médical'),
+('Raisons professionnelles', 'Attestation de l\'employeur');
+
+-- Création de la table Rdv
+CREATE TABLE Rdv (
+    numRdv INT AUTO_INCREMENT PRIMARY KEY,
+    daterdv DATE
+);
+
+-- Insertion de quelques exemples dans la table Rdv
+INSERT INTO Rdv (daterdv) VALUES 
+('2023-05-20'),
+('2023-06-15');
+
+-- Création de la table Employe
+CREATE TABLE Employe (
+    idEmploye INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(50),
+    login VARCHAR(50),
+    mdp VARCHAR(50),
+    categorie VARCHAR(50)
+);
+
+-- Insertion de quelques exemples dans la table Employe
+INSERT INTO Employe (nom, login, mdp, categorie) VALUES 
+('Smith', 's1', '123', 'directeur'),
+('Johnson', '1jo', 'm1', 'agent'),
+('Dupont', 'dp', 'a', 'conseiller');
