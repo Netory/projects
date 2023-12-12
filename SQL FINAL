@@ -32,6 +32,7 @@ CREATE TABLE client(
    mail VARCHAR(50),
    numTel INT,
    situation VARCHAR(50),
+   dateNaissance DATE,
    numEmploye INT NOT NULL,
    PRIMARY KEY(numClient),
    FOREIGN KEY(numEmploye) REFERENCES Employe(numEmploye)
