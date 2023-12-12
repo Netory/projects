@@ -1,19 +1,6 @@
-
-1 sur 4 419
-(aucun objet)
-Boîte de réception
-
-Baye Cheikh Diagne <bcdiagne99@gmail.com>
-Pièces jointes
-15:51 (il y a 0 minute)
-À moi
-
-
- 1 pièce jointe
-  • Analyse effectuée par Gmail
 CREATE TABLE Employe(
-   numEmploye INT,
-   nom VARCHAR(50),
+   numEmploye INT AUTO_INCREMENT,
+   nom VARCHAR(50) ,
    login VARCHAR(50),
    mdp VARCHAR(50),
    categorie VARCHAR(50),
@@ -26,7 +13,7 @@ CREATE TABLE Contract(
 );
 
 CREATE TABLE Motif(
-   idMotif INT,
+   idMotif INT AUTO_INCREMENT,
    libelleMotif VARCHAR(50),
    listePieces VARCHAR(50),
    PRIMARY KEY(idMotif)
@@ -38,7 +25,7 @@ CREATE TABLE Compte(
 );
 
 CREATE TABLE client(
-   numClient BIGINT,
+   numClient BIGINT AUTO_INCREMENT,
    nom VARCHAR(50),
    prenom VARCHAR(50),
    adresse VARCHAR(50),
@@ -51,7 +38,7 @@ CREATE TABLE client(
 );
 
 CREATE TABLE Rdv(
-   numRdv INT,
+   numRdv INT AUTO_INCREMENT,
    dateRdv DATETIME,
    numEmploye INT NOT NULL,
    numClient BIGINT,
@@ -63,7 +50,7 @@ CREATE TABLE Rdv(
 );
 
 CREATE TABLE Operation(
-   numOp INT,
+   numOp INT AUTO_INCREMENT,
    montant DECIMAL(15,2),
    typeOp VARCHAR(50),
    numClient BIGINT NOT NULL,
