@@ -1,0 +1,95 @@
+
+1 sur 4 419
+(aucun objet)
+Boîte de réception
+
+Baye Cheikh Diagne <bcdiagne99@gmail.com>
+Pièces jointes
+15:51 (il y a 0 minute)
+À moi
+
+
+ 1 pièce jointe
+  • Analyse effectuée par Gmail
+CREATE TABLE Employe(
+   numEmploye INT,
+   nom VARCHAR(50),
+   login VARCHAR(50),
+   mdp VARCHAR(50),
+   categorie VARCHAR(50),
+   PRIMARY KEY(numEmploye)
+);
+
+CREATE TABLE Contract(
+   nomContrat VARCHAR(50),
+   PRIMARY KEY(nomContrat)
+);
+
+CREATE TABLE Motif(
+   idMotif INT,
+   libelleMotif VARCHAR(50),
+   listePieces VARCHAR(50),
+   PRIMARY KEY(idMotif)
+);
+
+CREATE TABLE Compte(
+   nomCompte VARCHAR(50),
+   PRIMARY KEY(nomCompte)
+);
+
+CREATE TABLE client(
+   numClient BIGINT,
+   nom VARCHAR(50),
+   prenom VARCHAR(50),
+   adresse VARCHAR(50),
+   mail VARCHAR(50),
+   numTel INT,
+   situation VARCHAR(50),
+   numEmploye INT NOT NULL,
+   PRIMARY KEY(numClient),
+   FOREIGN KEY(numEmploye) REFERENCES Employe(numEmploye)
+);
+
+CREATE TABLE Rdv(
+   numRdv INT,
+   dateRdv DATETIME,
+   numEmploye INT NOT NULL,
+   numClient BIGINT,
+   idMotif INT NOT NULL,
+   PRIMARY KEY(numRdv),
+   FOREIGN KEY(numEmploye) REFERENCES Employe(numEmploye),
+   FOREIGN KEY(numClient) REFERENCES client(numClient),
+   FOREIGN KEY(idMotif) REFERENCES Motif(idMotif)
+);
+
+CREATE TABLE Operation(
+   numOp INT,
+   montant DECIMAL(15,2),
+   typeOp VARCHAR(50),
+   numClient BIGINT NOT NULL,
+   nomCompte VARCHAR(50) NOT NULL,
+   PRIMARY KEY(numOp),
+   FOREIGN KEY(numClient) REFERENCES client(numClient),
+   FOREIGN KEY(nomCompte) REFERENCES Compte(nomCompte)
+);
+
+CREATE TABLE ContratClient(
+   numClient BIGINT,
+   nomContrat VARCHAR(50),
+   dateOuvertureContrat DATE,
+   tarifMensuel DECIMAL(15,2),
+   PRIMARY KEY(numClient, nomContrat),
+   FOREIGN KEY(numClient) REFERENCES client(numClient),
+   FOREIGN KEY(nomContrat) REFERENCES Contract(nomContrat)
+);
+
+CREATE TABLE CompteCient(
+   numClient BIGINT,
+   nomCompte VARCHAR(50),
+   dateOuverture DATE,
+   solde DECIMAL(15,2),
+   montantDecouvert INT,
+   PRIMARY KEY(numClient, nomCompte),
+   FOREIGN KEY(numClient) REFERENCES client(numClient),
+   FOREIGN KEY(nomCompte) REFERENCES Compte(nomCompte)
+);
